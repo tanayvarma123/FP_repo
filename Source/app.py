@@ -18,7 +18,7 @@ st.set_page_config(page_title="Oil Production Forecast", layout="centered")
 st.title("🛢️ Oil Production Forecasting App")
 
 try:
-    data = pd.read_csv('Data/economic_data.csv', comment='#')
+    data = pd.read_csv('Data/economic_data.csv')
 
     # Parse Date column
     data['Date'] = pd.to_datetime(data['Date'])
