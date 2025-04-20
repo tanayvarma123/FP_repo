@@ -83,7 +83,7 @@ try:
 
         fig_short = go.Figure()
         fig_short.add_trace(go.Scatter(x=filtered_dates, y=filtered_values, mode='lines', name='Actual Production (Historical)', line=dict(color='blue')))
-        fig_short.add_trace(go.Scatter(x=short_term_dates, y=short_term_forecast, mode='lines', name='Short-Term Forecast', line=dict(color='red', dash='dash')))
+        fig_short.add_trace(go.Scatter(x=short_term_dates, y=short_term_forecast, mode='lines', name='Short-Term Forecast', line=dict(color='red')))
 
         fig_short.update_layout(
             xaxis_title="Date",
@@ -114,7 +114,7 @@ try:
 
         fig_long = go.Figure()
         fig_long.add_trace(go.Scatter(x=filtered_dates, y=filtered_values, mode='lines', name='Actual Production (Historical)', line=dict(color='blue')))
-        fig_long.add_trace(go.Scatter(x=long_term_dates, y=long_term_forecast, mode='lines', name='Long-Term Forecast', line=dict(color='green', dash='dash')))
+        fig_long.add_trace(go.Scatter(x=long_term_dates, y=long_term_forecast, mode='lines', name='Long-Term Forecast', line=dict(color='red')))
 
         fig_long.update_layout(
             xaxis_title="Date",
