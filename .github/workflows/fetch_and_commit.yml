@@ -1,0 +1,37 @@
+name: Fetch Economic Data
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'  # runs monthly on the 1st
+  workflow_dispatch:      # allows manual run from GitHub UI
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas
+
+      - name: Run fetch script
+        run: python fetch_data.py
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add economic_data.csv
+          git commit -m "📈 Update economic data"
+          git push
+        env:
+          # Needed if repo is private or for permissions
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
