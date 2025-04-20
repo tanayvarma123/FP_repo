@@ -18,7 +18,7 @@ st.set_page_config(page_title="Oil Production Forecast", layout="centered")
 st.title("🛢️ Oil Production Forecasting App")
 
 try:
-    data = pd.read_csv('Data/economic_data.csv')
+    data = pd.read_csv('Data/economic_data.csv', headers = True)
 
     # Parse Date column
     data['Date'] = pd.to_datetime(data['Date'])
@@ -55,7 +55,7 @@ try:
         short_term_forecast = model.forecast(steps=short_term_steps)
         short_term_forecast = np.array(short_term_forecast)
 
-        short_term_dates = pd.date_range(start=pd.to_datetime('2025-02-01'), periods=short_term_steps, freq='MS')
+        short_term_dates = pd.date_range(start=last_date + pd.DateOffset(months=1), periods=short_term_steps, freq='MS')
         short_term_dates = short_term_dates.strftime('%Y-%m-%d')
 
         short_forecast_df = pd.DataFrame({
@@ -67,7 +67,7 @@ try:
         long_term_forecast = model.forecast(steps=long_term_steps)
         long_term_forecast = np.array(long_term_forecast)
 
-        long_term_dates = pd.date_range(start=pd.to_datetime('2025-02-01'), periods=long_term_steps, freq='MS')
+        long_term_dates = pd.date_range(start=last_date + pd.DateOffset(months=1), periods=long_term_steps, freq='MS')
         long_term_dates = long_term_dates.strftime('%Y-%m-%d')
 
         long_forecast_df = pd.DataFrame({
