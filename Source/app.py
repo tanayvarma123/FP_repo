@@ -41,7 +41,7 @@ try:
             "Short-Term Forecast (months)",
             min_value=1,
             max_value=60,
-            value=12,
+            value=6,
             step=1
         )
     with col2:
@@ -49,7 +49,7 @@ try:
             "Long-Term Forecast (months)",
             min_value=1,
             max_value=120,
-            value=24,
+            value=36,
             step=1
         )
 
