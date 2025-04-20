@@ -1,0 +1,32 @@
+# fetch_data.py
+
+import pandas as pd
+
+tickers = {
+    'oil': 'OILPRODUS',
+    'gdp': 'GDPUS',
+    'indprod': 'IPUS',
+    'private_cons': 'RPRCUS',
+    'cpi': 'CPIUS',
+    'ppi': 'PPIUS',
+    'capform': 'RGFCFUS',
+    'cab': 'CAUS',
+    'yield10y': 'Y10YDUS'
+}
+
+def fetch_data(ticker):
+    url = f"https://www.econdb.com/api/series/{ticker}/?format=csv&frequency=M&token=4f69d3450e4ffe05aaeb4e33c458cd2c185cc185"
+    try:
+        df = pd.read_csv(url, index_col='Date', parse_dates=['Date'])
+        df.columns = [ticker]
+        return df
+    except Exception as e:
+        print(f"Error fetching {ticker}: {e}")
+        return pd.DataFrame()
+
+datasets = [fetch_data(tkr) for tkr in tickers.values()]
+df = pd.concat(datasets, axis=1)
+
+# Save as CSV
+df.to_csv("economic_data.csv")
+print("economic_data.csv saved.")
