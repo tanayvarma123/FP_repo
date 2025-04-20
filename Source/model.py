@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import root_mean_squared_error
 from statsmodels.tsa.arima.model import ARIMA
 import joblib
 
@@ -20,7 +20,7 @@ model_fit = model.fit()
 # ----------------------------
 # Calculate model performance
 fitted_values = model_fit.fittedvalues
-rmse = mean_squared_error(series[1:], fitted_values[1:], squared=False)
+rmse = root_mean_squared_error(series[1:], fitted_values[1:])
 aic = model_fit.aic
 
 print(f"✅ Model Performance: AIC = {aic:.2f}, RMSE = {rmse:.2f}")
