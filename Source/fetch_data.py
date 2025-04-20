@@ -35,9 +35,6 @@ df['Date'] = pd.to_datetime(df['Date'])
 # Filter to keep dates from 2002 onwards
 df = df[df['Date'] >= pd.to_datetime('2002-01-01')]
 
-# Drop rows with missing oil data
-df = df.dropna(subset=['OILPRODUS'])
-
 # Drop PPIUS column if it exists
 if 'PPIUS' in df.columns:
     df.drop(columns=['PPIUS'], inplace=True)
