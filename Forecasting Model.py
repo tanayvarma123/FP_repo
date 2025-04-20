@@ -1,5 +1,4 @@
 import pandas as pd
-import io
 import joblib
 from statsmodels.tsa.statespace.sarimax import SARIMAX
 from azure.storage.blob import BlobServiceClient
@@ -7,24 +6,7 @@ import warnings
 warnings.filterwarnings("ignore")
 from pandas.tseries.offsets import DateOffset
 
-# Azure Blob Storage setup
-connection_string = "DefaultEndpointsProtocol=https;AccountName=foundationprojectstorage;AccountKey=GNr/K5ligRjMCu+G+XaZDrFxw1axPdd9zlHxAkbNvvgdWhYTfU3pK2XjLkKD0w07jnfOuiTndZOz+AStFjXgTQ==;EndpointSuffix=core.windows.net"
-blob_service_client = BlobServiceClient.from_connection_string(connection_string)
-raw_data_container = "raw-data"
-
-def download_from_blob(blob_name):
-    # Create a BlobClient
-    blob_client = blob_service_client.get_blob_client(container=raw_data_container, blob=blob_name)
-    
-    # Download the blob content as a string
-    blob_data = blob_client.download_blob().content_as_text()
-    
-    # Convert the string data to a DataFrame
-    df = pd.read_csv(io.StringIO(blob_data))
-    return df
-
-df = download_from_blob("economic_data.csv")
-df.head()
+df = pd.read_csv("economic_data.csv", header=True)
 
 # Convert to dd-mm-yyyy format
 df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
