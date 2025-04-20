@@ -2,8 +2,8 @@ name: Fetch Economic Data
 
 on:
   schedule:
-    - cron: '0 0 1 * *'  # runs monthly on the 1st
-  workflow_dispatch:      # allows manual run from GitHub UI
+    - cron: '0 0 1 * *'  # Monthly on the 1st
+  workflow_dispatch:      # Manual trigger option
 
 jobs:
   update-data:
@@ -25,11 +25,11 @@ jobs:
       - name: Run fetch script
         run: python fetch_data.py
 
-      - name: Commit and push changes
+      - name: Commit and push changes if any
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
-      
+          
           git add economic_data.csv
           if git diff --cached --quiet; then
             echo "📭 No changes to commit"
@@ -37,6 +37,3 @@ jobs:
             git commit -m "📈 Update economic data"
             git push
           fi
-        env:
-          # Needed if repo is private or for permissions
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
