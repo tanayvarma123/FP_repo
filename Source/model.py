@@ -1,31 +1,23 @@
+# score.py
+
+import numpy as np
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
+from statsmodels.tsa.arima.model import ARIMA
 import joblib
-from statsmodels.tsa.statespace.sarimax import SARIMAX
-import warnings
-warnings.filterwarnings("ignore")
 
-df = pd.read_csv("economic_data.csv", header=True)
+# ----------------------------
+# Load data
 
+df = pd.read_csv("Data/economic_data.csv", index_col='Date', parse_dates=['Date'])
+series = df['OILPRODUS'].dropna()
 
-## DATA CLEANING ##
+# ----------------------------
+# Fit ARIMA model
+model = ARIMA(series, order=(9, 1, 10))
+model_fit = model.fit()
 
-# Convert to dd-mm-yyyy format
-df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
-
-# Filter rows to keep dates after 2002
-df = df[pd.to_datetime(df['Date'], format='%d-%m-%Y') >= '01-01-2002']
-
-# Oil Production data is not available for the last 2 months, so dropping them as na
-df = df.dropna(subset=['OILPRODUS'])
-
-# Producer price index data is not available before 2014, so we are dropping that column
-df.drop(columns=['PPIUS'], inplace=True)
-df = df.set_index('Date', drop=True)
-
-# Fit SARIMA model with best order
-arima_model = SARIMAX(df['OILPRODUS'], order=(9,1,10))
-arima_result = arima_model.fit(disp=False)
-
-# Save ARIMA model
-joblib.dump(arima_result, 'arima_model.pkl')
-print("Model saved as 'arima_model.pkl'")
+# ----------------------------
+# Save model
+joblib.dump(model_fit, "Data/arima_model.pkl")
+print("✅ ARIMA model saved as Data/arima_model.pkl")
