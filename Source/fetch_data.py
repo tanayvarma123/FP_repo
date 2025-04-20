@@ -41,6 +41,8 @@ if 'PPIUS' in df.columns:
 
 # Set Date as index and interpolate
 df = df.set_index('Date')
+# Oil Production data is not available for the last 2 months, so dropping them as na
+df = df.dropna(subset=['OILPRODUS'])
 df.iloc[:, 1:] = df.iloc[:, 1:].interpolate(method='linear', inplace=False)
 df = df.ffill()
 
