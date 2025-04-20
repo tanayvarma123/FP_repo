@@ -22,7 +22,7 @@ try:
 
     # Parse Date column
     data['Date'] = pd.to_datetime(data['Date'])
-    data = data.dropna(subset=['Date', 'OILPRODUS'])
+    # data = data.dropna(subset=['Date', 'OILPRODUS'])
 
     # Sort by Date to ensure proper plotting and forecasting
     data = data.sort_values(by='Date')
