@@ -42,3 +42,4 @@ jobs:
           else
             git commit -m "📊 Update economic data and retrain ARIMA model"
             git push
+          fi
