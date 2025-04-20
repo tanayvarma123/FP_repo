@@ -4,10 +4,10 @@
 
 | Name                            | ID        |
 |--------------------------------|-----------|
+| Tanay Varma                    | 12410046  |
 | Krishna Vikranth Kumar Nadipalli | 12410002 |
 | Astha Gupta                     | 12320090  |
 | Pulkit Chopra                  | 12410030  |
-| Tanay Varma                    | 12410046  |
 
 #### Data Summary
 
