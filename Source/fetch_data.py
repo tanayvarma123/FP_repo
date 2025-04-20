@@ -44,7 +44,7 @@ if 'PPIUS' in df.columns:
 
 # Set Date as index and interpolate
 df = df.set_index('Date')
-df = df.interpolate(method='linear', inplace=False)
+df.iloc[:, 1:] = df.iloc[:, 1:].interpolate(method='linear', inplace=False)
 
 # Save as CSV
 df.to_csv("economic_data.csv")
