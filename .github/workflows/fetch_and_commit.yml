@@ -5,6 +5,9 @@ on:
     - cron: '0 0 1 * *'  # Monthly on the 1st
   workflow_dispatch:      # Manual trigger option
 
+permissions:
+  contents: write  # Required to push commits from actions
+
 jobs:
   update-data:
     runs-on: ubuntu-latest
@@ -20,20 +23,22 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas
+          pip install pandas numpy statsmodels joblib scikit-learn
 
       - name: Run fetch script
         run: python Source/fetch_data.py
+
+      - name: Run ARIMA model after data update
+        run: python FP_repo/Source/model.py
 
       - name: Commit and push changes if any
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           
-          git add Data/economic_data.csv
+          git add Data/economic_data.csv Data/arima_model.pkl
           if git diff --cached --quiet; then
             echo "📭 No changes to commit"
           else
-            git commit -m "📈 Update economic data"
+            git commit -m "📊 Update economic data and retrain ARIMA model"
             git push
-          fi
