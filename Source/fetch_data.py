@@ -30,11 +30,15 @@ df = pd.concat(datasets, axis=1)
 
 # Convert to dd-mm-yyyy format
 df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
-
 # Filter rows to keep dates after 2002
 df = df[pd.to_datetime(df['Date'], format='%d-%m-%Y') >= '01-01-2002']
+# Oil Production data is not available for the last 2 months, so dropping them as na
+df = df.dropna(subset=['OILPRODUS'])
+# Producer price index data is not available before 2014, so we are dropping that column
+df.drop(columns=['PPIUS'], inplace=True)
+df = df.set_index('Date', drop=True)
+df = df.interpolate(method='linear', inplace=False)
 
-df.iloc[:, 1:] = df.iloc[:, 1:].interpolate(method='linear', inplace=False)
 # Save as CSV
 df.to_csv("economic_data.csv")
 
