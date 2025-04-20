@@ -21,7 +21,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install pandas numpy statsmodels joblib
+          pip install pandas numpy statsmodels joblib scikit-learn
 
       - name: Run ARIMA model training script
         run: python Source/model.py
