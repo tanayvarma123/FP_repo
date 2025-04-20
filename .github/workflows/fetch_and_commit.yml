@@ -23,14 +23,14 @@ jobs:
           pip install pandas
 
       - name: Run fetch script
-        run: python fetch_data.py
+        run: python Source/fetch_data.py
 
       - name: Commit and push changes if any
         run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           
-          git add economic_data.csv
+          git add Data/economic_data.csv
           if git diff --cached --quiet; then
             echo "📭 No changes to commit"
           else
