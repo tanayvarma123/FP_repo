@@ -1,5 +1,3 @@
-# fetch_data.py
-
 import pandas as pd
 from datetime import datetime
 
@@ -27,22 +25,31 @@ def fetch_data(ticker):
 
 datasets = [fetch_data(tkr) for tkr in tickers.values()]
 df = pd.concat(datasets, axis=1)
-print(df.columns)
-# Convert to dd-mm-yyyy format
-df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
-# Filter rows to keep dates after 2002
-df = df[pd.to_datetime(df['Date'], format='%d-%m-%Y') >= '01-01-2002']
-# Oil Production data is not available for the last 2 months, so dropping them as na
+
+# Reset index so 'Date' is a column
+df.reset_index(inplace=True)
+
+# Ensure 'Date' is in datetime format
+df['Date'] = pd.to_datetime(df['Date'])
+
+# Filter to keep dates from 2002 onwards
+df = df[df['Date'] >= pd.to_datetime('2002-01-01')]
+
+# Drop rows with missing oil data
 df = df.dropna(subset=['OILPRODUS'])
-# Producer price index data is not available before 2014, so we are dropping that column
-df.drop(columns=['PPIUS'], inplace=True)
-df = df.set_index('Date', drop=True)
+
+# Drop PPIUS column if it exists
+if 'PPIUS' in df.columns:
+    df.drop(columns=['PPIUS'], inplace=True)
+
+# Set Date as index and interpolate
+df = df.set_index('Date')
 df = df.interpolate(method='linear', inplace=False)
 
 # Save as CSV
 df.to_csv("economic_data.csv")
 
-# Append timestamp to ensure change is detected
+# Append update timestamp
 with open("economic_data.csv", "a") as f:
     f.write(f"# Updated on {datetime.utcnow().isoformat()} UTC\n")
 
