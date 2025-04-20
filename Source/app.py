@@ -77,7 +77,7 @@ try:
 
         # 📈 Short-Term Forecast Graph
         st.subheader("📈 Short-Term Forecast")
-        mask_2000 = historical_dates >= pd.to_datetime('2000-01-01')
+        mask_2000 = historical_dates >= pd.to_datetime('2002-01-01')
         filtered_dates = historical_dates[mask_2000]
         filtered_values = values.flatten()[mask_2000]
 
