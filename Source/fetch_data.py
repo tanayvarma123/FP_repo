@@ -27,7 +27,7 @@ def fetch_data(ticker):
 
 datasets = [fetch_data(tkr) for tkr in tickers.values()]
 df = pd.concat(datasets, axis=1)
-
+print(df.columns)
 # Convert to dd-mm-yyyy format
 df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
 # Filter rows to keep dates after 2002
