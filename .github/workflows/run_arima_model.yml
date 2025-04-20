@@ -24,7 +24,7 @@ jobs:
           pip install pandas numpy statsmodels joblib
 
       - name: Run ARIMA model training script
-        run: python FP_repo/Source/model.py
+        run: python Source/model.py
 
       - name: Commit and push trained ARIMA model
         run: |
