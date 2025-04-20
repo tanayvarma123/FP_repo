@@ -47,7 +47,7 @@ df = df.set_index('Date')
 df.iloc[:, 1:] = df.iloc[:, 1:].interpolate(method='linear', inplace=False)
 
 # Save as CSV
-df.to_csv("economic_data.csv")
+df.to_csv("Data/economic_data.csv")
 
 # Append update timestamp
 with open("economic_data.csv", "a") as f:
