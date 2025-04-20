@@ -16,7 +16,7 @@ tickers = {
 }
 
 def fetch_data(ticker):
-    url = f"https://www.econdb.com/api/series/{ticker}/?format=csv&frequency=M&token=4f69d3450e4ffe05aaeb4e33c458cd2c185cc185"
+    url = f"https://www.econdb.com/api/series/{ticker}/?format=csv&frequency=M&token=92a25975a3c9c874cc143b70c6066ff4a95378c9"
     try:
         df = pd.read_csv(url, index_col='Date', parse_dates=['Date'])
         df.columns = [ticker]
