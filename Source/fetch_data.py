@@ -28,6 +28,13 @@ def fetch_data(ticker):
 datasets = [fetch_data(tkr) for tkr in tickers.values()]
 df = pd.concat(datasets, axis=1)
 
+# Convert to dd-mm-yyyy format
+df['Date'] = pd.to_datetime(df['Date']).dt.strftime('%d-%m-%Y')
+
+# Filter rows to keep dates after 2002
+df = df[pd.to_datetime(df['Date'], format='%d-%m-%Y') >= '01-01-2002']
+
+df.iloc[:, 1:] = df.iloc[:, 1:].interpolate(method='linear', inplace=False)
 # Save as CSV
 df.to_csv("economic_data.csv")
 
