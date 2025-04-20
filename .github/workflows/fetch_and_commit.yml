@@ -30,7 +30,7 @@ jobs:
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add economic_data.csv
-          git commit -m "📈 Update economic data"
+          git commit -m "Updated economic data"
           git push
         env:
           # Needed if repo is private or for permissions
