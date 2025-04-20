@@ -1,0 +1,40 @@
+name: Train and Save ARIMA Model
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  train-arima:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          pip install pandas numpy statsmodels joblib
+
+      - name: Run ARIMA model training script
+        run: python FP_repo/Source/model.py
+
+      - name: Commit and push trained ARIMA model
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git add Data/arima_model.pkl
+          if git diff --cached --quiet; then
+            echo "📭 No changes to model"
+          else
+            git commit -m "🧠 Save trained ARIMA model"
+            git push
+          fi
