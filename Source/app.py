@@ -9,7 +9,7 @@ import joblib
 # Load the trained ARIMA/SARIMAX model
 @st.cache_resource
 def load_trained_model():
-    model = joblib.load('arima_model.pkl')
+    model = joblib.load('Data/arima_model.pkl')
     return model
 
 # Streamlit App
@@ -18,7 +18,7 @@ st.set_page_config(page_title="Oil Production Forecast", layout="centered")
 st.title("🛢️ Oil Production Forecasting App")
 
 try:
-    data = pd.read_csv('economic_data.csv')
+    data = pd.read_csv('Data/economic_data.csv')
 
     # Parse Date column
     data['Date'] = pd.to_datetime(data['Date'])
