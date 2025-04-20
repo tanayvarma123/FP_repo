@@ -1,6 +1,7 @@
 # fetch_data.py
 
 import pandas as pd
+from datetime import datetime
 
 tickers = {
     'oil': 'OILPRODUS',
@@ -29,4 +30,9 @@ df = pd.concat(datasets, axis=1)
 
 # Save as CSV
 df.to_csv("economic_data.csv")
+
+# Append timestamp to ensure change is detected
+with open("economic_data.csv", "a") as f:
+    f.write(f"# Updated on {datetime.utcnow().isoformat()} UTC\n")
+
 print("economic_data.csv saved.")
